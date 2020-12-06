@@ -19,8 +19,8 @@ from jwt_debugger.decoder import resolve_jwks_uri_from_open_id_connect_provider
 
 
 @command()
-@option('--public-key', type=File())
-@option('--oidc-provider-url')
+@option('--public-key', type=File(), help='JSON Web Key in JSON or PEM format for signature verification.')
+@option('--oidc-provider-url', help='OpenID Connect Provider URL where JSON Web Key Set can be pulled for signature verification.')
 @argument('token', required=True)
 def cli(token :str, public_key :Optional[TextIOWrapper] =None, oidc_provider_url :str =None) -> None:
     if all([public_key, oidc_provider_url]):
