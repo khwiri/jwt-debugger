@@ -102,7 +102,7 @@ class TestDecodeToken(TestCase):
 
         self.assertEqual(decoded_token.header,   DECODED_TOKEN_HEADER)
         self.assertEqual(decoded_token.payload,  DECODED_TOKEN_PAYLOAD)
-        self.assertEqual(decoded_token.verified, signature_verified)
+        self.assertIs(decoded_token.verified, signature_verified)
 
     def test_decode_with_invalid_public_key(self):
         mock_key = Mock()
@@ -113,10 +113,10 @@ class TestDecodeToken(TestCase):
 
         self.assertEqual(decoded_token.header,  DECODED_TOKEN_HEADER)
         self.assertEqual(decoded_token.payload, DECODED_TOKEN_PAYLOAD)
-        self.assertFalse(decoded_token.verified)
+        self.assertIs(decoded_token.verified, False)
 
     def test_decode_without_public_key(self):
         decoded_token = decode_token(ENCODED_TOKEN, public_key=None)
         self.assertEqual(decoded_token.header,  DECODED_TOKEN_HEADER)
         self.assertEqual(decoded_token.payload, DECODED_TOKEN_PAYLOAD)
-        self.assertFalse(decoded_token.verified)
+        self.assertIsNone(decoded_token.verified)

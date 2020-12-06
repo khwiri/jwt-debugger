@@ -18,10 +18,13 @@ from jwcrypto.jwt import JWT
 from rich.console import RenderResult
 
 
-HEADER_COLOR    = '#fb015b'
-PAYLOAD_COLOR   = '#d63aff'
-SIGNATURE_COLOR = '#00b9f1'
-DELIMITER_COLOR = '#000000'
+HEADER_COLOR         = '#fb015b'
+PAYLOAD_COLOR        = '#d63aff'
+SIGNATURE_COLOR      = '#00b9f1'
+DELIMITER_COLOR      = '#000000'
+SIGANTURE_VALID_COLOR   = SIGNATURE_COLOR
+SIGNATURE_INVALID_COLOR = '#ff0000'
+SIGNATURE_SKIP_COLOR    = '#aaaaaa'
 
 
 pretty_json_dumps_ = partial(json.dumps, indent=4)
@@ -32,7 +35,7 @@ class DecodedToken:
     token    :str
     header   :Dict
     payload  :Dict
-    verified :bool
+    verified :Optional[bool] # Signature Verification will be None for tokens decoded without public keys
 
     def __rich_console__(self, *args, **kwargs) -> RenderResult:
         yield self._render_encoded_token_table()
@@ -68,11 +71,24 @@ class DecodedToken:
         payload_text.append(pretty_json_dumps_(self.payload), style=PAYLOAD_COLOR)
         table.add_row(payload_text)
 
-        signature_text = Text()
-        signature_text.append(
-            Emoji.replace('Signature Verified! :blue_heart::blue_heart::blue_heart:'),
-            style=SIGNATURE_COLOR
-        )
+        if self.verified is True:
+            signature_text = Text(
+                Emoji.replace('Signature Verified :blue_heart:'),
+                style=SIGANTURE_VALID_COLOR
+            )
+
+        elif self.verified is False:
+            signature_text = Text(
+                Emoji.replace('Invalid Signature :skull:'),
+                style=SIGNATURE_INVALID_COLOR
+            )
+
+        else:
+            signature_text = Text(
+                Emoji.replace('Skipped Signature Verification :eyes:'),
+                style=SIGNATURE_SKIP_COLOR
+            )
+
         table.add_row(signature_text)
 
         return table
@@ -87,7 +103,7 @@ def decode_token(token :str, public_key :Optional[Union[JWK, JWKSet]] =None) -> 
         verified = False
 
     else:
-        verified = False if public_key is None else True
+        verified = None if public_key is None else True
 
     decoded_token = DecodedToken(
         token    = token,
