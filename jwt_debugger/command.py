@@ -1,3 +1,4 @@
+import sys
 from io import TextIOWrapper
 from typing import Union
 from typing import Optional
@@ -41,4 +42,8 @@ def cli(token :str, public_key :Optional[TextIOWrapper] =None, oidc_provider_url
         decode_token_ = partial(decode_token, public_key=None)
 
     decoded_token = decode_token_(token)
+
     print(decoded_token)
+
+    if decoded_token.verified is False:
+        sys.exit(1)
