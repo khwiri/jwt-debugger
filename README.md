@@ -2,6 +2,8 @@ JWT Debugger
 ============
 
 [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/khwiri/jwt-debugger)
+[![Test](https://github.com/khwiri/jwt-debugger/actions/workflows/test.yml/badge.svg)](https://github.com/khwiri/jwt-debugger/actions/workflows/test.yml)
+[![Lint](https://github.com/khwiri/jwt-debugger/actions/workflows/lint.yml/badge.svg)](https://github.com/khwiri/jwt-debugger/actions/workflows/lint.yml)
 [![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://github.com/khwiri/jwt-debugger)
 
 **JWT Debugger** is a command-line interface inspired by [jwt.io](https://jwt.io)
