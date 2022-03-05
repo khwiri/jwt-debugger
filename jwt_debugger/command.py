@@ -1,12 +1,10 @@
 import sys
 from io import TextIOWrapper
-from typing import Union
 from typing import Optional
 from functools import partial
 
 from rich import print  # pylint: disable=redefined-builtin
 from click import File
-from click import Choice
 from click import option
 from click import command
 from click import argument

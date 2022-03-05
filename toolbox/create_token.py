@@ -4,8 +4,6 @@ from click import File
 from click import option
 from click import command
 from jwcrypto.jwk import JWK
-from jwcrypto.jwk import JWKSet
-from jwcrypto.jws import InvalidJWSSignature
 from jwcrypto.jwt import JWT
 
 
