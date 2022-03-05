@@ -21,20 +21,20 @@ Install with [pip](https://pip.pypa.io/en/stable).
 *Note: Passing --editable so that pip freeze produces usable requirements.*
 
 ```
-> pip install --editable git+https://github.com/khwiri/jwt-debugger.git@main#egg=jwt-debugger
+pip install --editable git+https://github.com/khwiri/jwt-debugger.git@main#egg=jwt-debugger
 ```
 
 Install with [pipenv](https://pipenv.pypa.io/en/latest).
 
 ```
-> pipenv install git+https://github.com/khwiri/jwt-debugger.git@main#egg=jwt-debugger
+pipenv install git+https://github.com/khwiri/jwt-debugger.git@main#egg=jwt-debugger
 ```
 
 Usage
 -----
 
 ```
-> jwt-debugger --help
+jwt-debugger --help
 Usage: jwt-debugger [OPTIONS] TOKEN
 
 Options:
@@ -52,7 +52,7 @@ Options:
 Simply pass a JSON Web Token to have it decoded.
 
 ```
-> jwt-debugger TOKEN
+jwt-debugger TOKEN
 ```
 
 If you have a JSON Web Key then that can be used to verify whether the token has
@@ -60,11 +60,11 @@ been tampered with by verifying that the signature matches. JSON Web Keys can be
 in standard JSON format or PEM files.
 
 ```
-> jwt-debugger --public-key jwk.json TOKEN
+jwt-debugger --public-key jwk.json TOKEN
 ```
 
 ```
-> jwt-debugger --public-key jwk.pem TOKEN
+jwt-debugger --public-key jwk.pem TOKEN
 ```
 
 Alternatively, JSON Web Keys can be used from OpenID Connect Providers. This can
@@ -72,16 +72,12 @@ be accomplished by using the `--oidc-provider-url` argument and a url referencin
 [OpenID Connect Provider Configuration Information](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderConfig).
 
 ```
-> jwt-debugger \
-    --oidc-provider-url https://accounts.google.com/.well-known/openid-configuration \
-    TOKEN
+jwt-debugger --oidc-provider-url https://accounts.google.com/.well-known/openid-configuration TOKEN
 ```
 
 If you're using [IdentityServer4](https://github.com/IdentityServer/IdentityServer4)
 then a direct url to the JSON Web Key Set can be used.
 
 ```
-> jwt-debugger \
-    --oidc-provider-url https://demo.identityserver.io/.well-known/openid-configuration/jwks \
-    TOKEN
+jwt-debugger --oidc-provider-url https://demo.identityserver.io/.well-known/openid-configuration/jwks TOKEN
 ```
