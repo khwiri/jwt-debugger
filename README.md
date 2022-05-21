@@ -1,5 +1,4 @@
-JWT Debugger
-============
+# JWT Debugger
 
 [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/khwiri/jwt-debugger)
 [![Test](https://github.com/khwiri/jwt-debugger/actions/workflows/test.yml/badge.svg)](https://github.com/khwiri/jwt-debugger/actions/workflows/test.yml)
@@ -13,8 +12,7 @@ so that the token can be locally introspected.
 
 ![Example Usage](./assets/example_usage.png)
 
-Installing
-----------
+## Installing
 
 Install with [pip](https://pip.pypa.io/en/stable).
 
@@ -30,8 +28,7 @@ Install with [pipenv](https://pipenv.pypa.io/en/latest).
 pipenv install git+https://github.com/khwiri/jwt-debugger.git@main#egg=jwt-debugger
 ```
 
-Usage
------
+## Usage
 
 ```
 jwt-debugger --help
@@ -81,3 +78,8 @@ then a direct url to the JSON Web Key Set can be used.
 ```
 jwt-debugger --oidc-provider-url https://demo.identityserver.io/.well-known/openid-configuration/jwks TOKEN
 ```
+
+## Contributing
+
+For guidance on setting up a development environment and how to make a contribution,
+see the [contributing guidelines](./CONTRIBUTING.md).
