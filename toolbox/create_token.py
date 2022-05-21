@@ -74,7 +74,7 @@ def cli(payload :TextIOWrapper, jwk_path :Optional[PathLibPath] =None, jwkset_pa
 
     jwt.make_signed_token(jwk)
     token = jwt.serialize()
-    print(f'Token: {token}')
+    print(token)
 
 
 if __name__ == '__main__':
