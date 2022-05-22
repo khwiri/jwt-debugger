@@ -52,6 +52,13 @@ Simply pass a JSON Web Token to have it decoded.
 jwt-debugger TOKEN
 ```
 
+Tokens can also be read from standard input. The following example uses the
+`create_token.py` tool to generate a token.
+
+```
+pipenv run python toolbox/create_token.py --private-key toolbox/example_private_key_rs256.json --payload toolbox/example_payload.json | pipenv run jwt-debugger
+```
+
 If you have a JSON Web Key then that can be used to verify whether the token has
 been tampered with by verifying that the signature matches. JSON Web Keys can be
 in standard JSON format or PEM files.
