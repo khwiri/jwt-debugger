@@ -31,7 +31,7 @@ pipenv sync --dev
 ```
 
 Use the following command to install jwt-debugger as an editable package.
-See [Pip Editbale Installs](https://pip.pypa.io/en/stable/topics/local-project-installs/#editable-installs) for more information.
+See [Pip Editable Installs](https://pip.pypa.io/en/stable/topics/local-project-installs/#editable-installs) for more information.
 
 ```
 pipenv run pip install --editable .
