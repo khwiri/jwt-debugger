@@ -37,10 +37,9 @@ Usage: jwt-debugger [OPTIONS] TOKEN
 Options:
   --public-key FILENAME     JSON Web Key in JSON or PEM format for signature
                             verification.
-
   --oidc-provider-url TEXT  OpenID Connect Provider URL where JSON Web Key Set
                             can be pulled for signature verification.
-
+  --format [pretty|json]    Output format
   --help                    Show this message and exit.
 ```
 
@@ -84,6 +83,13 @@ then a direct url to the JSON Web Key Set can be used.
 
 ```
 jwt-debugger --oidc-provider-url https://demo.identityserver.io/.well-known/openid-configuration/jwks TOKEN
+```
+
+Additionally, tokens can be decoded into json so that they can be piped to other commands. Here's
+an example using [jq](https://stedolan.github.io/jq/) to extract the `name` property from the `payload` found in [toolbox/example_payload.json](./toolbox/example_payload.json).
+
+```
+pipenv run jwt-debugger --format json TOKEN | jq ".payload.name"
 ```
 
 ## Contributing

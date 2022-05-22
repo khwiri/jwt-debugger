@@ -4,30 +4,13 @@ from io import TextIOWrapper
 from typing import Dict
 from typing import Union
 from typing import Optional
-from functools import partial
 from dataclasses import dataclass
 
 import requests
-from rich.text import Text
-from rich.emoji import Emoji
-from rich.table import Table
 from jwcrypto.jwk import JWK
 from jwcrypto.jwk import JWKSet
 from jwcrypto.jws import InvalidJWSSignature
 from jwcrypto.jwt import JWT
-from rich.console import RenderResult
-
-
-HEADER_COLOR         = '#fb015b'
-PAYLOAD_COLOR        = '#d63aff'
-SIGNATURE_COLOR      = '#00b9f1'
-DELIMITER_COLOR      = '#000000'
-SIGANTURE_VALID_COLOR   = SIGNATURE_COLOR
-SIGNATURE_INVALID_COLOR = '#ff0000'
-SIGNATURE_SKIP_COLOR    = '#aaaaaa'
-
-
-pretty_json_dumps_ = partial(json.dumps, indent=4)
 
 
 @dataclass
@@ -36,62 +19,6 @@ class DecodedToken:
     header   :Dict
     payload  :Dict
     verified :Optional[bool] # Signature Verification will be None for tokens decoded without public keys
-
-    def __rich_console__(self, *args, **kwargs) -> RenderResult:
-        yield self._render_encoded_token_table()
-        yield self._render_decoded_token_table()
-
-    def _render_encoded_token_table(self):
-        header, payload, signature = self.token.split('.')
-
-        text = Text(overflow='fold')
-        text.append(header,    style=HEADER_COLOR)
-        text.append('.',       style=DELIMITER_COLOR)
-        text.append(payload,   style=PAYLOAD_COLOR)
-        text.append('.',       style=DELIMITER_COLOR)
-        text.append(signature, style=SIGNATURE_COLOR)
-
-        table = Table(expand=True)
-        table.add_column('Encoded Token')
-        table.add_row(text)
-
-        return table
-
-    def _render_decoded_token_table(self):
-        table = Table(expand=True, leading=1)
-        table.add_column('Decoded Token')
-
-        header_text = Text(overflow='fold')
-        header_text.append('Header\n', style=HEADER_COLOR)
-        header_text.append(pretty_json_dumps_(self.header), style=HEADER_COLOR)
-        table.add_row(header_text)
-
-        payload_text = Text(overflow='fold')
-        payload_text.append('Payload\n', style=PAYLOAD_COLOR)
-        payload_text.append(pretty_json_dumps_(self.payload), style=PAYLOAD_COLOR)
-        table.add_row(payload_text)
-
-        if self.verified is True:
-            signature_text = Text(
-                Emoji.replace('Signature Verified :blue_heart:'),
-                style=SIGANTURE_VALID_COLOR
-            )
-
-        elif self.verified is False:
-            signature_text = Text(
-                Emoji.replace('Invalid Signature :skull:'),
-                style=SIGNATURE_INVALID_COLOR
-            )
-
-        else:
-            signature_text = Text(
-                Emoji.replace('Skipped Signature Verification :eyes:'),
-                style=SIGNATURE_SKIP_COLOR
-            )
-
-        table.add_row(signature_text)
-
-        return table
 
 
 def decode_token(token :str, public_key :Optional[Union[JWK, JWKSet]] =None) -> DecodedToken:
@@ -105,13 +32,12 @@ def decode_token(token :str, public_key :Optional[Union[JWK, JWKSet]] =None) -> 
     else:
         verified = None if public_key is None else True
 
-    decoded_token = DecodedToken(
-        token    = token,
-        header   = json.loads(jwt.token.objects.get('protected')),
-        payload  = json.loads(jwt.token.objects.get('payload', b'').decode()),
-        verified = verified
+    return DecodedToken(
+        token,
+        json.loads(jwt.token.objects.get('protected')),
+        json.loads(jwt.token.objects.get('payload', b'').decode()),
+        verified
     )
-    return decoded_token
 
 
 PEM_HEADER_PATTERN = re.compile('.*-----BEGIN .+-----.+-----END .+-----.*', flags=re.DOTALL)

@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Support Multiple Output Formats for Decoded Tokens https://github.com/khwiri/jwt-debugger/pull/9
 - Ability to Decode Tokens from Standard Input https://github.com/khwiri/jwt-debugger/pull/8
 
 ### Changed
