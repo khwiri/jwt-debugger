@@ -135,7 +135,7 @@ def load_jwkset_from_oidc_url(url :str) -> JWKSet:
     return key_set
 
 
-def resolve_jwks_uri_from_open_id_connect_provider(provider_url :str) -> str:
+def resolve_jwks_uri_from_oidc_provider(provider_url :str) -> str:
     '''Resolve JWKS Endpoint from OpenID Connect Provider url'''
     # Default IdentityServer4 jwks url
     #  reference: https://github.com/IdentityServer/IdentityServer4

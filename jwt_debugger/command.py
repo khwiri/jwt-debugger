@@ -13,7 +13,7 @@ from click.exceptions import UsageError
 from jwt_debugger.decoder import decode_token
 from jwt_debugger.decoder import load_jwk_from_file
 from jwt_debugger.decoder import load_jwkset_from_oidc_url
-from jwt_debugger.decoder import resolve_jwks_uri_from_open_id_connect_provider
+from jwt_debugger.decoder import resolve_jwks_uri_from_oidc_provider
 
 
 @command()
@@ -33,7 +33,7 @@ def cli(token :str, public_key :Optional[TextIOWrapper] =None, oidc_provider_url
             load_public_key_ = partial(load_jwk_from_file, public_key)
 
         else:
-            jwks_uri = resolve_jwks_uri_from_open_id_connect_provider(oidc_provider_url)
+            jwks_uri = resolve_jwks_uri_from_oidc_provider(oidc_provider_url)
             load_public_key_ = partial(load_jwkset_from_oidc_url, jwks_uri)
 
         decode_token_ = partial(decode_token, public_key=load_public_key_())
