@@ -1,0 +1,7 @@
+{
+    "kty" : "RSA",
+    "e"   : "AQAB",
+    "use" : "sig",
+    "alg" : "RS256",
+    "n"   : "faux-modules"
+}

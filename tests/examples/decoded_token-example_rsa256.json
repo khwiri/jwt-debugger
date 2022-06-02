@@ -1,0 +1,11 @@
+{
+    "header": {
+        "typ": "JWT",
+        "alg": "RS256"
+    },
+    "payload": {
+        "sub": "1234567890",
+        "name": "Marty Byrde",
+        "iat": 1516239022
+    }
+}
