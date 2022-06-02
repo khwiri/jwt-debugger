@@ -22,6 +22,10 @@ class TestOIDCProvider(TestCase):
             'https://example.com/issuer1',
             'https://example.com/issuer1/.well-known/openid-configuration',
         ),
+        (
+            'https://example.com/issuer1/',
+            'https://example.com/issuer1/.well-known/openid-configuration',
+        ),
     ])
     def test_jwks_from_provider_url(self, provider_url :str, configuration_url :str):
         with patch('requests.get', return_value=self._mock_configuration_response) as mock_requests_get:

@@ -143,7 +143,10 @@ def resolve_jwks_uri_from_open_id_connect_provider(provider_url :str) -> str:
     if provider_url.endswith('/.well-known/openid-configuration/jwks'):
         return provider_url
 
+    # OpenID Provider Configuration
+    #  reference: https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderConfig
     if not provider_url.endswith('/.well-known/openid-configuration'):
+        provider_url = provider_url[:-1] if provider_url.endswith('/') else provider_url
         configuration_url = f'{provider_url}/.well-known/openid-configuration'
 
     else:
