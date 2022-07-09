@@ -26,7 +26,7 @@ def cli(token :str, public_key :Optional[TextIOWrapper] =None, oidc_provider_url
 
     token_parts = token.split('.')
     if len(token_parts) != 3:
-        raise ValueError('Token must consist of a header, payload, and signature all separated by periods.')
+        raise UsageError('Token must consist of a header, payload, and signature all separated by periods.')
 
     if any([public_key, oidc_provider_url]):
         if public_key is not None:
