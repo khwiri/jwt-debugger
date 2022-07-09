@@ -69,3 +69,13 @@ class TestCLI(TestCase):
             load_jwk_from_file_mock.assert_called_once()
             self.assertIn('Invalid Signature', result.output)
             self.assertEqual(1, result.exit_code)
+
+    def test_decode_token_from_stdin(self):
+        token           = load_encoded_token('rsa256')
+        public_key      = load_public_key('rsa256')
+        public_key_path = get_public_key_path('rsa256')
+
+        with patch('jwt_debugger.command.load_jwk_from_file', return_value=public_key):
+            result = self.runner.invoke(cli, ['--public-key', public_key_path], input=token)
+            self.assertIn('Signature Verified', result.output)
+            self.assertEqual(0, result.exit_code)
