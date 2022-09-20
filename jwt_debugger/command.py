@@ -29,11 +29,12 @@ def read_token_argument(unused_context :Context, unused_argument :Argument, valu
     return value
 
 
+@command()
 @option('--public-key', type=File(), help='JSON Web Key in JSON or PEM format for signature verification.')
 @option('--oidc-provider-url', help='OpenID Connect Provider URL where JSON Web Key Set can be pulled for signature verification.')
-@option('--format', type=Choice(['pretty', 'json']), default='pretty', help='Output format')
+@option('--format', 'output_format', type=Choice(['pretty', 'json']), default='pretty', help='Output format')
 @argument('token', required=False, callback=read_token_argument)
-def cli(token :str, format :str, public_key :Optional[TextIOWrapper] =None, oidc_provider_url :str =None) -> None:
+def cli(token :str, output_format :str, public_key :Optional[TextIOWrapper] =None, oidc_provider_url :str =None) -> None:
     if all([public_key, oidc_provider_url]):
         raise UsageError('The following options can not be used together (--public-key, --oidc-provider-url).')
 
@@ -55,7 +56,7 @@ def cli(token :str, format :str, public_key :Optional[TextIOWrapper] =None, oidc
         decode_token_ = partial(decode_token, public_key=None)
 
     decoded_token = decode_token_(token)
-    if format == 'json':
+    if output_format == 'json':
         console_renderable = JSONDecodedToken(decoded_token.header, decoded_token.payload)
 
     else:
