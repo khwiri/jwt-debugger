@@ -7,3 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Ability to Decode Tokens from Standard Input https://github.com/khwiri/jwt-debugger/pull/8
+
+### Changed
+- Update Python Dependencies https://github.com/khwiri/jwt-debugger/pull/12
+
+### Fixed
+- Ensure Python Version Set Correctly in GitHub Actions https://github.com/khwiri/jwt-debugger/pull/11
