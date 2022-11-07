@@ -5,6 +5,8 @@ on: [push]
 jobs:
   test:
     runs-on: ${{matrix.os}}-latest
+    env:
+      PIPENV_DEFAULT_PYTHON_VERSION: ${{matrix.python-version}}
     strategy:
       fail-fast: false
       matrix:
