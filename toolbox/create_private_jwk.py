@@ -8,7 +8,7 @@ from jwcrypto.jwk import JWK
 
 @command
 @option('--format', 'output_format', type=Choice(['json', 'pem']), default='json', help='The output format for the private JSON Web Key.')
-def cli(output_format :str) -> None:
+def cli(output_format: str) -> None:
     '''Creates a private JSON Web Key.'''
     # Todo: Pass key parameters as cli options (e.g. alg, kty, use, ...).
     jwk = JWK.generate(alg='RS256', kty='RSA', use='sig')

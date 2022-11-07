@@ -22,7 +22,7 @@ from jwt_debugger.decoder import load_jwkset_from_oidc_url
 from jwt_debugger.decoder import resolve_jwks_uri_from_oidc_provider
 
 
-def read_token_argument(unused_context :Context, unused_argument :Argument, value :Optional[str]) -> str:
+def read_token_argument(unused_context: Context, unused_argument: Argument, value: Optional[str]) -> str:
     if value is None:
         stdin_stream = get_text_stream('stdin')
         return stdin_stream.read().strip()
@@ -34,7 +34,7 @@ def read_token_argument(unused_context :Context, unused_argument :Argument, valu
 @option('--oidc-provider-url', help='OpenID Connect Provider URL where JSON Web Key Set can be pulled for signature verification.')
 @option('--format', 'output_format', type=Choice(['pretty', 'json']), default='pretty', help='Output format')
 @argument('token', required=False, callback=read_token_argument)
-def cli(token :str, output_format :str, public_key :Optional[TextIOWrapper] =None, oidc_provider_url :str =None) -> None:
+def cli(token: str, output_format: str, public_key: Optional[TextIOWrapper] = None, oidc_provider_url: str = None) -> None:
     if all([public_key, oidc_provider_url]):
         raise UsageError('The following options can not be used together (--public-key, --oidc-provider-url).')
 

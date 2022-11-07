@@ -10,7 +10,7 @@ from click.exceptions import UsageError # pylint: disable=ungrouped-imports
 
 @command
 @argument('jwkset', type=ClickPath(exists=True, dir_okay=False, path_type=PathLibPath))
-def cli(jwkset :PathLibPath) -> None:
+def cli(jwkset: PathLibPath) -> None:
     '''Exports public keys from JSON Web Key Set.'''
     if jwkset.suffix != '.json':
         raise UsageError('Only json files are supported.')

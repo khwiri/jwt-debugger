@@ -15,13 +15,13 @@ from jwcrypto.jwt import JWT
 
 @dataclass
 class DecodedToken:
-    token    :str
-    header   :Dict
-    payload  :Dict
-    verified :Optional[bool] # Signature Verification will be None for tokens decoded without public keys
+    token: str
+    header: Dict
+    payload: Dict
+    verified: Optional[bool] # Signature Verification will be None for tokens decoded without public keys
 
 
-def decode_token(token :str, public_key :Optional[Union[JWK, JWKSet]] =None) -> DecodedToken:
+def decode_token(token: str, public_key: Optional[Union[JWK, JWKSet]] = None) -> DecodedToken:
     try:
         jwt = JWT(jwt=token, key=public_key)
 
@@ -41,7 +41,7 @@ def decode_token(token :str, public_key :Optional[Union[JWK, JWKSet]] =None) -> 
 
 
 PEM_HEADER_PATTERN = re.compile('.*-----BEGIN .+-----.+-----END .+-----.*', flags=re.DOTALL)
-def load_jwk_from_file(key :TextIOWrapper) -> JWK:
+def load_jwk_from_file(key: TextIOWrapper) -> JWK:
     content = key.read()
     if PEM_HEADER_PATTERN.fullmatch(content):
         key = JWK.from_pem(content.encode())
@@ -52,7 +52,7 @@ def load_jwk_from_file(key :TextIOWrapper) -> JWK:
     return key
 
 
-def load_jwkset_from_oidc_url(url :str) -> JWKSet:
+def load_jwkset_from_oidc_url(url: str) -> JWKSet:
     '''Load JSON Web Key Set from OpenID Connect JWKS endpoint'''
     response = requests.get(url)
     response.raise_for_status()
@@ -61,7 +61,7 @@ def load_jwkset_from_oidc_url(url :str) -> JWKSet:
     return key_set
 
 
-def resolve_jwks_uri_from_oidc_provider(provider_url :str) -> str:
+def resolve_jwks_uri_from_oidc_provider(provider_url: str) -> str:
     '''Resolve JWKS Endpoint from OpenID Connect Provider url'''
     # Default IdentityServer4 jwks url
     #  reference: https://github.com/IdentityServer/IdentityServer4

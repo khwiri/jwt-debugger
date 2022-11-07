@@ -27,14 +27,14 @@ class TestOIDCProvider(TestCase):
             'https://example.com/issuer1/.well-known/openid-configuration',
         ),
     ])
-    def test_jwks_from_provider_url(self, provider_url :str, configuration_url :str):
+    def test_jwks_from_provider_url(self, provider_url: str, configuration_url: str):
         with patch('requests.get', return_value=self._mock_configuration_response) as mock_requests_get:
             jwks_uri = resolve_jwks_uri_from_oidc_provider(provider_url)
             mock_requests_get.assert_called_with(configuration_url)
             self.assertEqual(jwks_uri, self._faux_jwks_uri)
 
     def test_configuration_does_not_include_jwks_uri(self):
-        provider_url  = 'https://example.com/.well-known/openid-configuration'
+        provider_url = 'https://example.com/.well-known/openid-configuration'
         mock_response = Mock()
         mock_response.json.return_value = {}
         with patch('requests.get', return_value=mock_response), self.assertRaises(KeyError) as raise_context:

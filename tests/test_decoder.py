@@ -14,9 +14,9 @@ from jwt_debugger.decoder import decode_token
 
 class TestPEMRegex(TestCase):
     def test_regex(self):
-        pem_path    = Path('.') / 'tests' / 'examples' / 'public_key-example_rsa256.pem'
+        pem_path = Path('.') / 'tests' / 'examples' / 'public_key-example_rsa256.pem'
         pem_content = pem_path.read_text()
-        match       = PEM_HEADER_PATTERN.fullmatch(pem_content)
+        match = PEM_HEADER_PATTERN.fullmatch(pem_content)
         self.assertTrue(match)
 
 
@@ -32,7 +32,7 @@ class TestDecodeToken(TestCase):
             load_decoded_token('rsa256'),
         ),
     ])
-    def test_decode_without_public_key(self, encoded_token :str, expect :DecodedToken):
+    def test_decode_without_public_key(self, encoded_token: str, expect: DecodedToken):
         decoded_token = decode_token(encoded_token)
         self.assertDecodedTokenEqual(decoded_token, expect)
         self.assertIsNone(decoded_token.verified)
@@ -54,7 +54,7 @@ class TestDecodeToken(TestCase):
             load_decoded_token('rsa256', verified=False),
         )
     ])
-    def test_decode_with_public_key(self, public_key :JWK, encoded_token :str, expect :DecodedToken):
+    def test_decode_with_public_key(self, public_key: JWK, encoded_token: str, expect: DecodedToken):
         decoded_token = decode_token(encoded_token, public_key)
         self.assertDecodedTokenEqual(decoded_token, expect)
         self.assertIsNotNone(decoded_token.verified)
