@@ -4,7 +4,7 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-ipython = "*"
+ipython = {version = "*", python_version = ">= '3.8'"} # see: https://ipython.readthedocs.io/en/stable/whatsnew/version8.html#removing-support-for-older-python-versions
 pylint = "*"
 isort = "*"
 parameterized = "*"
