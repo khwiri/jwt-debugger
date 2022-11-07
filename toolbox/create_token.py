@@ -15,7 +15,7 @@ from click.exceptions import UsageError
 from click.exceptions import ClickException
 
 
-def open_jwk(jwk_path :PathLibPath) -> JWK:
+def open_jwk(jwk_path: PathLibPath) -> JWK:
     if jwk_path.suffix not in ('.json', '.pem'):
         raise ClickException('Only json and pem files are supported.')
 
@@ -28,7 +28,7 @@ def open_jwk(jwk_path :PathLibPath) -> JWK:
     return jwk
 
 
-def get_jwk_from_jwkset(jwkset_path :PathLibPath, kid :Optional[str] =None) -> Optional[JWK]:
+def get_jwk_from_jwkset(jwkset_path: PathLibPath, kid: Optional[str] = None) -> Optional[JWK]:
     jwkset = JWKSet.from_json(jwkset_path.read_text())
     keys   = list(jwkset['keys'])
 
@@ -50,7 +50,7 @@ def get_jwk_from_jwkset(jwkset_path :PathLibPath, kid :Optional[str] =None) -> O
 @option('--jwkset', 'jwkset_path', type=ClickPath(exists=True, dir_okay=False, path_type=PathLibPath), help='Private JSON Web Key Set for signing.')
 @option('--kid', type=str, help='Unique identifier for a key to use from a JSON Web Key Set.')
 @argument('payload', type=File(), required=True)
-def cli(payload :TextIOWrapper, jwk_path :Optional[PathLibPath] =None, jwkset_path :Optional[PathLibPath] =None, kid :Optional[str] =None) -> None:
+def cli(payload: TextIOWrapper, jwk_path: Optional[PathLibPath] = None, jwkset_path: Optional[PathLibPath] = None, kid: Optional[str] = None) -> None:
     '''Creates an encoded JSON Web Token.'''
     if all([jwk_path, jwkset_path]):
         raise UsageError('The following options can not be used together (--jwk, --jwkset).')
@@ -65,12 +65,12 @@ def cli(payload :TextIOWrapper, jwk_path :Optional[PathLibPath] =None, jwkset_pa
         raise UsageError('Must provide either --jwk or --jwkset options.')
 
     algorithm = jwk.get('alg', 'RS256')
-    header    = {'typ': 'JWT', 'alg': algorithm}
+    header = {'typ': 'JWT', 'alg': algorithm}
     if jwkset_path:
         header['kid'] = jwk.get('kid')
 
     payload = json.load(payload)
-    jwt     = JWT(header=header, claims=payload)
+    jwt = JWT(header=header, claims=payload)
 
     jwt.make_signed_token(jwk)
     token = jwt.serialize()

@@ -24,10 +24,10 @@ pretty_json_dumps_ = partial(json.dumps, indent=4)
 
 @dataclass
 class PrettyDecodedToken:
-    token    :str
-    header   :Dict
-    payload  :Dict
-    verified :Optional[bool] # Signature Verification will be None for tokens decoded without public keys
+    token: str
+    header: Dict
+    payload: Dict
+    verified: Optional[bool] # Signature Verification will be None for tokens decoded without public keys
 
     def __rich_console__(self, *args, **kwargs) -> RenderResult:
         yield self._render_encoded_token_table()
@@ -88,8 +88,8 @@ class PrettyDecodedToken:
 
 @dataclass
 class JSONDecodedToken:
-    header :Dict
-    payload :Dict
+    header: Dict
+    payload: Dict
 
     def __rich_console__(self, *args, **kwargs) -> RenderResult:
         yield pretty_json_dumps_(

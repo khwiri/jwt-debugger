@@ -10,7 +10,7 @@ from click.exceptions import UsageError # pylint: disable=ungrouped-imports
 
 @command
 @argument('jwk', type=ClickPath(exists=True, dir_okay=False, path_type=PathLibPath))
-def cli(jwk :PathLibPath) -> None:
+def cli(jwk: PathLibPath) -> None:
     '''Exports public key from JSON Web Key with support for JSON or PEM files.'''
     if jwk.suffix not in ('.json', '.pem'):
         raise UsageError('Only json and pem files are supported.')
